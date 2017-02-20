@@ -12,6 +12,11 @@ view: sub_station {
     sql: ${TABLE}.city ;;
   }
 
+  dimension: dock_count {
+    type: number
+    sql: ${TABLE}.dock_count ;;
+  }
+
   dimension_group: installation {
     type: time
     timeframes: [
@@ -27,22 +32,19 @@ view: sub_station {
   }
 
   dimension: location {
-    type:  location
+    type: location
     sql_latitude: ${TABLE}.lat ;;
     sql_longitude: ${TABLE}.lng ;;
   }
+
 
   dimension: name {
     type: string
     sql: ${TABLE}.name ;;
   }
 
-  measure: count {
-    type: count
+  measure: station_count {
+    type: count_distinct
     drill_fields: [id, name]
-  }
-  measure: dock_count {
-    type: count
-    drill_fields: [dock_count]
   }
 }
