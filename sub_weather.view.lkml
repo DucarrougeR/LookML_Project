@@ -1,20 +1,6 @@
 view: sub_weather {
   sql_table_name: public.sub_weather ;;
 
-  dimension_group: time_info {
-    type: time
-    timeframes: [
-      raw,
-      date,
-      week,
-      month,
-      quarter,
-      year
-    ]
-    convert_tz: no
-    sql: ${TABLE}._date ;;
-  }
-
   dimension: cloud_cover {
     type: number
     sql: ${TABLE}.cloud_cover ;;
@@ -22,16 +8,21 @@ view: sub_weather {
 
   dimension: events {
     type: string
-    sql: ${TABLE}.events ;;
+    sql: CASE WHEN ${TABLE}.events is null THEN 'Normal'
+              WHEN ${TABLE}.events = 'rain' THEN 'Rain'
+              ELSE ${TABLE}.events
+              END;;
   }
 
   dimension: index {
     type: number
+    hidden:  yes
     sql: ${TABLE}.index ;;
   }
 
   dimension: max_dew_point_f {
     type: number
+    hidden: yes
     sql: ${TABLE}.max_dew_point_f ;;
   }
 
@@ -80,11 +71,6 @@ view: sub_weather {
     sql: ${TABLE}.mean_sea_level_pressure_inches ;;
   }
 
-  dimension: mean_temperature_f {
-    type: number
-    sql: ${TABLE}.mean_temperature_f ;;
-  }
-
   dimension: mean_visibility_miles {
     type: number
     sql: ${TABLE}.mean_visibility_miles ;;
@@ -120,6 +106,21 @@ view: sub_weather {
     sql: ${TABLE}.min_visibility_miles ;;
   }
 
+  dimension_group: weather {
+    type: time
+    timeframes: [
+      raw,
+      date,
+      day_of_week,
+      week,
+      month,
+      quarter,
+      year
+    ]
+    convert_tz: no
+    sql: ${TABLE}.weather_date ;;
+  }
+
   dimension: wind_dir_degrees {
     type: number
     sql: ${TABLE}.wind_dir_degrees ;;
@@ -128,6 +129,11 @@ view: sub_weather {
   dimension: zip_code {
     type: string
     sql: ${TABLE}.zip_code ;;
+  }
+
+  dimension: mean_temperature_f {
+    type: number
+    sql: ${TABLE}.mean_temperature_f ;;
   }
 
   measure: count {
