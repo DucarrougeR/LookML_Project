@@ -20,12 +20,6 @@ view: sub_weather {
     sql: ${TABLE}.index ;;
   }
 
-  dimension: max_dew_point_f {
-    type: number
-    hidden: yes
-    sql: ${TABLE}.max_dew_point_f ;;
-  }
-
   dimension: max_gust_speed_mph {
     type: number
     sql: ${TABLE}.max_gust_speed_mph ;;
@@ -34,11 +28,6 @@ view: sub_weather {
   dimension: max_humidity {
     type: number
     sql: ${TABLE}.max_humidity ;;
-  }
-
-  dimension: max_sea_level_pressure_inches {
-    type: number
-    sql: ${TABLE}.max_sea_level_pressure_inches ;;
   }
 
   dimension: max_temperature_f {
@@ -56,24 +45,9 @@ view: sub_weather {
     sql: ${TABLE}.max_wind_speed_mph ;;
   }
 
-  dimension: mean_dew_point_f {
-    type: number
-    sql: ${TABLE}.mean_dew_point_f ;;
-  }
-
   dimension: mean_humidity {
     type: number
     sql: ${TABLE}.mean_humidity ;;
-  }
-
-  dimension: mean_sea_level_pressure_inches {
-    type: number
-    sql: ${TABLE}.mean_sea_level_pressure_inches ;;
-  }
-
-  dimension: mean_visibility_miles {
-    type: number
-    sql: ${TABLE}.mean_visibility_miles ;;
   }
 
   dimension: mean_wind_speed_mph {
@@ -81,19 +55,9 @@ view: sub_weather {
     sql: ${TABLE}.mean_wind_speed_mph ;;
   }
 
-  dimension: min_dew_point_f {
-    type: number
-    sql: ${TABLE}.min_dew_point_f ;;
-  }
-
   dimension: min_humidity {
     type: number
     sql: ${TABLE}.min_humidity ;;
-  }
-
-  dimension: min_sea_level_pressure_inches {
-    type: number
-    sql: ${TABLE}.min_sea_level_pressure_inches ;;
   }
 
   dimension: min_temperature_f {
@@ -143,6 +107,11 @@ view: sub_weather {
 
   measure: measure_mean_temp {
     type: number
-    sql: ${mean_temperature_f} ;;
+    sql: ${mean_temperature_f} *1 ;;
+  }
+
+  measure:  avg_temp {
+    type:  average
+    sql:  ${mean_temperature_f} ;;
   }
 }

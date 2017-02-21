@@ -124,6 +124,11 @@ view: sub_trip {
     drill_fields: [id, end_station_name, start_station_name]
   }
 
+  measure:avg_trip_time {
+    type: average
+    sql:  ${duration} ;;
+  }
+
   measure: avg_count {
     type: average
     sql: ${start_time} ;;
