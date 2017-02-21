@@ -115,7 +115,6 @@ view: sub_trip {
               WHEN ${zip_code} = '94131' THEN 'Forest Hill'
               WHEN ${zip_code} = '94107' THEN 'Mission Bay'
               WHEN ${zip_code} = '94158' THEN 'Dogpatch'
-
               ELSE ${zip_code} END
               ;;
   }
@@ -123,5 +122,10 @@ view: sub_trip {
   measure: count {
     type: count
     drill_fields: [id, end_station_name, start_station_name]
+  }
+
+  measure: avg_count {
+    type: average
+    sql: ${start_time} ;;
   }
 }

@@ -140,4 +140,9 @@ view: sub_weather {
     type: count
     drill_fields: []
   }
+
+  measure: measure_mean_temp {
+    type: number
+    sql: ${mean_temperature_f} ;;
+  }
 }
