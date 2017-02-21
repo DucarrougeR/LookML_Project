@@ -20,56 +20,6 @@ view: sub_weather {
     sql: ${TABLE}.index ;;
   }
 
-  dimension: max_gust_speed_mph {
-    type: number
-    sql: ${TABLE}.max_gust_speed_mph ;;
-  }
-
-  dimension: max_humidity {
-    type: number
-    sql: ${TABLE}.max_humidity ;;
-  }
-
-  dimension: max_temperature_f {
-    type: number
-    sql: ${TABLE}.max_temperature_f ;;
-  }
-
-  dimension: max_visibility_miles {
-    type: number
-    sql: ${TABLE}.max_visibility_miles ;;
-  }
-
-  dimension: max_wind_speed_mph {
-    type: number
-    sql: ${TABLE}.max_wind_speed_mph ;;
-  }
-
-  dimension: mean_humidity {
-    type: number
-    sql: ${TABLE}.mean_humidity ;;
-  }
-
-  dimension: mean_wind_speed_mph {
-    type: number
-    sql: ${TABLE}.mean_wind_speed_mph ;;
-  }
-
-  dimension: min_humidity {
-    type: number
-    sql: ${TABLE}.min_humidity ;;
-  }
-
-  dimension: min_temperature_f {
-    type: number
-    sql: ${TABLE}.min_temperature_f ;;
-  }
-
-  dimension: min_visibility_miles {
-    type: number
-    sql: ${TABLE}.min_visibility_miles ;;
-  }
-
   dimension_group: weather {
     type: time
     timeframes: [
@@ -100,18 +50,72 @@ view: sub_weather {
     sql: ${TABLE}.mean_temperature_f ;;
   }
 
+  dimension:  is_week_day {
+    type:  yesno
+    sql: ${weather_day_of_week} = ANY('{Monday, Tuesday, Wednesday, Thursday, Friday}') ;;
+  }
+
   measure: count {
     type: count
     drill_fields: []
   }
 
-  measure: measure_mean_temp {
-    type: number
-    sql: ${mean_temperature_f} *1 ;;
-  }
-
   measure:  avg_temp {
     type:  average
     sql:  ${mean_temperature_f} ;;
+  }
+
+  measure: measure_mean_temp {
+    type: number
+    sql: ${mean_temperature_f} ;;
+  }
+
+  measure: max_gust_speed_mph {
+    type: max
+    sql: ${TABLE}.max_gust_speed_mph ;;
+  }
+
+  measure: max_humidity {
+    type: max
+    sql: ${TABLE}.max_humidity ;;
+  }
+
+  measure: max_temperature_f {
+    type: max
+    sql: ${TABLE}.max_temperature_f ;;
+  }
+
+  measure: max_visibility_miles {
+    type: max
+    sql: ${TABLE}.max_visibility_miles ;;
+  }
+
+  measure: max_wind_speed_mph {
+    type: max
+    sql: ${TABLE}.max_wind_speed_mph ;;
+  }
+  measure: min_humidity {
+    type: min
+    sql: ${TABLE}.min_humidity ;;
+  }
+
+  measure: min_temperature_f {
+    type: min
+    sql: ${TABLE}.min_temperature_f ;;
+  }
+
+  measure: min_visibility_miles {
+    type: min
+    sql: ${TABLE}.min_visibility_miles ;;
+  }
+
+  measure: avg_humidity {
+    type: average
+    sql: ${TABLE}.mean_humidity ;;
+  }
+
+  measure: avg_wind_speed_mph {
+    type: average
+    sql: ${TABLE}.mean_wind_speed_mph ;;
   }
 }

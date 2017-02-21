@@ -115,7 +115,7 @@ view: sub_trip {
               WHEN ${zip_code} = '94131' THEN 'Forest Hill'
               WHEN ${zip_code} = '94107' THEN 'Mission Bay'
               WHEN ${zip_code} = '94158' THEN 'Dogpatch'
-              ELSE ${zip_code} END
+              ELSE NULL END
               ;;
   }
 

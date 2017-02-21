@@ -34,7 +34,7 @@ explore: overall_picture {
   }
 
   join: sub_weather {
-    sql_on: ${sub_trip.zip_code} = ${sub_weather.zip_code} ;;
+    sql_on: ${sub_trip.start_date} = ${sub_weather.weather_date} ;;
     relationship:  many_to_one
 
   }

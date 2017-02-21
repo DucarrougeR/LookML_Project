@@ -44,7 +44,7 @@ view: sub_station {
   }
 
   measure: station_count {
-    type: count_distinct
+    type: count
     drill_fields: [id, name]
   }
 }
