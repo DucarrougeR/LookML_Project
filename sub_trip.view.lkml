@@ -129,8 +129,4 @@ view: sub_trip {
     sql:  ${duration} ;;
   }
 
-  measure: avg_count {
-    type: average
-    sql: ${start_time} ;;
-  }
 }
