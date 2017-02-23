@@ -8,15 +8,13 @@ include: "*.dashboard.lookml"  # include all dashboards in this project
 #
 
 map_layer: identifier {
-  feature_key: "string"
-  format: topojson
-  label: "norcal_map"
-  projection: cartesian  # or one of many other choices
-  #property_key: "string"
-  #property_label_key: "string"
-  url: "https://cdn.rawgit.com/DucarrougeR/d4d88407dc8cc76813d25e1879352ea1/raw/1f5fac16d0b71ec68ad6e281d554467f6dee4a99/Bay_Area_Project.json"
+  file: "Bay_Area_Project.json"
+  property_key: "ZCTA5CE10"
   }
-#https://cdn.rawgit.com/DucarrougeR/d4d88407dc8cc76813d25e1879352ea1/raw/1f5fac16d0b71ec68ad6e281d554467f6dee4a99/Bay_Area_Project.json
+
+# https://cdn.rawgit.com/DucarrougeR/d4d88407dc8cc76813d25e1879352ea1/raw/1f5fac16d0b71ec68ad6e281d554467f6dee4a99/Bay_Area_Project.json
+# property_key: "ZCTA5CE10"
+
 explore: overall_picture {
   view_name: sub_trip {
     sql_always_where: LENGTH(${sub_trip.zip_code}) = 5

@@ -86,8 +86,8 @@ view: sub_trip {
   }
 
   dimension: geo_map {
-    map_layer_name: identifier
     sql: ${zip_code} ;;
+    map_layer_name: identifier
   }
 
   dimension: neighborhood {
