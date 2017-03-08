@@ -76,7 +76,7 @@ view: sub_trip {
   }
 
   dimension: zip_code {
-    type: string
+    type: zipcode
     sql: ${TABLE}.zip_code;;
   }
 
@@ -119,9 +119,14 @@ view: sub_trip {
               ;;
   }
 
+  dimension: product_image {
+    sql: CASE WHEN 1=1 THEN 'san-francisco' END;;
+      html: <img src='https://www.dryfast.net/wp-content/uploads/2015/09/Dryfast-seal-of-city-and-county-of-san-francisco.jpg' width="100" height="100"/>;;
+  }
+
   measure: count {
-    type: count
-    drill_fields: [id, end_station_name, start_station_name]
+    type: count_distinct
+    sql: ${id} ;;
   }
 
   measure:avg_trip_time {

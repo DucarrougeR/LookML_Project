@@ -19,7 +19,7 @@ view: sub_status {
   dimension: station_id {
     primary_key: yes
     type: string
-    sql: ${TABLE}.station_id ;;
+    sql: CAST(${TABLE}.station_id AS INTEGER);;
   }
 
   dimension_group: status {

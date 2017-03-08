@@ -8,8 +8,8 @@ include: "*.dashboard.lookml"  # include all dashboards in this project
 #
 
 map_layer: identifier {
-  file: "Bay_Area_Project.json"
-  property_key: "ZCTA5CE10"
+  file: "departements.json"
+  property_key: "nom"
   }
 
 # https://cdn.rawgit.com/DucarrougeR/d4d88407dc8cc76813d25e1879352ea1/raw/1f5fac16d0b71ec68ad6e281d554467f6dee4a99/Bay_Area_Project.json
