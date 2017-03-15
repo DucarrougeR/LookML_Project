@@ -22,6 +22,10 @@ view: sub_trip {
     timeframes: [
       raw,
       time,
+      hour,
+      hour2,
+      hour_of_day,
+      day_of_week,
       date,
       week,
       month,
@@ -51,6 +55,10 @@ view: sub_trip {
     timeframes: [
       raw,
       time,
+      hour,
+      hour2,
+      hour_of_day,
+      day_of_week,
       date,
       week,
       month,
@@ -130,8 +138,24 @@ view: sub_trip {
   }
 
   measure:avg_trip_time {
+    description: "trip duration in seconds"
     type: average
     sql:  ${duration} ;;
   }
+
+# NEED TO CHECK THIS MEASURE ON MODAY TO GET THE REVENUE WORKING
+# NEED TO MAKE A MONTH TO MONTH COMPARISON OF REVENUE
+  measure: revenue {
+    type: sum
+    sql:  CASE WHEN ${duration} < 1800 THEN 0
+               WHEN ${duration} BETWEEN 1800 AND 3600 THEN 4
+               WHEN ${duration} > 3600 THEN ((${sub_trip.duration}-3600)/1800 *7 + 4)
+          END;;
+    value_format_name: usd
+  }
+
+# % of bikes used on a daily basis?
+
+# NEED A SINGLE VIS OF NUMBER OF Subscribers and Customers
 
 }
