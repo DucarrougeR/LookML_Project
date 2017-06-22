@@ -51,3 +51,16 @@ explore:  sub_trip {
   # make sure that it is a real zip code, and that it is in California (starts with 9)
   sql_always_where: LENGTH(${zip_code}) = 5 AND (${zip_code} LIKE '94%' OR ${zip_code} LIKE '95%');;
 }
+
+explore: pdt_cities{
+  label: "Test Postgres Ranking"
+}
+
+explore: playing_with_parameters{
+  label: "Parameters"
+}
+
+
+explore: pdt_rank_test {
+  label:  "pdt rank test"
+}

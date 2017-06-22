@@ -13,9 +13,27 @@ view: sub_trip {
   }
 
   dimension: duration {
+    label: "🕓"
     type: number
     sql: ${TABLE}.duration ;;
   }
+
+#
+  dimension: duration_tier_value_format {
+    type: tier
+    tiers: [0,1000,2000,3000,4000,5000,6000,7000,8000]
+    style: integer
+    value_format: "#,##0"
+    sql: ${TABLE}.duration ;;
+  }
+#
+#   dimension: duration_tier_value_name {
+#     type: tier
+#     tiers: [0,1000,2000,3000,4000,5000,6000,7000,8000]
+#     style: integer
+#     value_format_name: decimal_0
+#     sql: ${TABLE}.duration ;;
+#   }
 
   dimension_group: end {
     type: time
@@ -37,6 +55,24 @@ view: sub_trip {
     ]
     sql: ${TABLE}.end_date ;;
   }
+
+  dimension:time_periods {
+    type: string
+    sql: CASE WHEN CAST(${end_hour_of_day} AS INTEGER) in (7, 8, 9, 10, 11, 12, 13, 14) THEN '[7-15[ period'
+          WHEN ${end_hour_of_day} in (15, 16) THEN '[15-17[ period'
+          WHEN ${end_hour_of_day} in (17, 18) THEN '[17-19[ period'
+          WHEN ${end_hour_of_day} in (19, 20, 21, 22) THEN '[19-23[ period'
+          ELSE '[23-7[ period'
+        END;;
+  }
+
+#           CASE
+#           WHEN (${end_hour_of_day} >= 7 AND ${end_hour_of_day} < 15) THEN "7-15 period"
+#           WHEN (${end_hour_of_day} >= 15 AND ${end_hour_of_day} < 17) THEN "15-17 period"
+#           WHEN (${end_hour_of_day} >= 17 AND ${end_hour_of_day} < 19) THEN "17-19 period"
+#           WHEN (${end_hour_of_day} <= 19 AND ${end_hour_of_day} < 23) THEN "19-23 period"
+#           ELSE "23-7 period"
+#         END;;
 
   dimension: end_station_id {
     type: string
@@ -63,7 +99,10 @@ view: sub_trip {
       hour_of_day,
       day_of_week,
       month_name,
+      minute,
+      minute15,
       date,
+      time_of_day,
       week,
       month,
       quarter,
@@ -80,6 +119,7 @@ view: sub_trip {
   dimension: start_station_name {
     type: string
     sql: ${TABLE}.start_station_name ;;
+    drill_fields: [subscription_type, sub_station.location]
   }
 
   dimension: subscription_type {
@@ -147,7 +187,7 @@ view: sub_trip {
     sql:  ${duration} ;;
   }
 
-# NEED TO CHECK THIS MEASURE ON MODAY TO GET THE REVENUE WORKING
+# NEED TO CHECK THIS MEASURE ON MONDAY TO GET THE REVENUE WORKING
 # NEED TO MAKE A MONTH TO MONTH COMPARISON OF REVENUE
   measure: revenue {
     type: sum
@@ -158,8 +198,6 @@ view: sub_trip {
     value_format_name: usd
   }
 
-# % of bikes used on a daily basis?
 
-# NEED A SINGLE VIS OF NUMBER OF Subscribers and Customers
 
 }
