@@ -64,3 +64,11 @@ explore: playing_with_parameters{
 explore: pdt_rank_test {
   label:  "pdt rank test"
 }
+
+explore: test_dt_tf {
+  label: "Z test dt tf"
+}
+
+explore: just_to_test {
+  label: "Z just to test"
+}

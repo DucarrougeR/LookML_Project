@@ -1,4 +1,4 @@
-view: sub_trip {
+view: just_to_test {
   sql_table_name: public.sub_trip ;;
 
   dimension: id {
@@ -71,14 +71,6 @@ view: sub_trip {
           ELSE '[23-7[ period'
         END;;
   }
-
-#           CASE
-#           WHEN (${end_hour_of_day} >= 7 AND ${end_hour_of_day} < 15) THEN "7-15 period"
-#           WHEN (${end_hour_of_day} >= 15 AND ${end_hour_of_day} < 17) THEN "15-17 period"
-#           WHEN (${end_hour_of_day} >= 17 AND ${end_hour_of_day} < 19) THEN "17-19 period"
-#           WHEN (${end_hour_of_day} <= 19 AND ${end_hour_of_day} < 23) THEN "19-23 period"
-#           ELSE "23-7 period"
-#         END;;
 
   dimension: end_station_id {
     type: string
@@ -179,7 +171,7 @@ view: sub_trip {
 
   dimension: product_image {
     sql: CASE WHEN 1=1 THEN 'san-francisco' END;;
-      html: <img src='https://www.dryfast.net/wp-content/uploads/2015/09/Dryfast-seal-of-city-and-county-of-san-francisco.jpg' width="100" height="100"/>;;
+    html: <img src='https://www.dryfast.net/wp-content/uploads/2015/09/Dryfast-seal-of-city-and-county-of-san-francisco.jpg' width="100" height="100"/>;;
   }
 
   measure: count {
@@ -193,17 +185,94 @@ view: sub_trip {
     sql:  ${duration} ;;
   }
 
-# NEED TO CHECK THIS MEASURE ON MONDAY TO GET THE REVENUE WORKING
-# NEED TO MAKE A MONTH TO MONTH COMPARISON OF REVENUE
-  measure: revenue {
-    type: sum
-    sql:  CASE WHEN ${duration} < 1800 THEN 0
-               WHEN ${duration} BETWEEN 1800 AND 3600 THEN 4
-               WHEN ${duration} > 3600 THEN ((${sub_trip.duration}-3600)/1800 *7 + 4)
-          END;;
-    value_format_name: usd
+
+#####################
+# TESTS
+####################
+
+  dimension: dimension_with_select {
+    group_label: "Z Testing"
+    type:  string
+    sql:  SELECT ${TABLE}.duration ;;
   }
 
+  measure: measure_with_select {
+    group_label: "Z Testing"
+    type:  number
+    sql:  SELECT ${TABLE}.duration ;;
+  }
 
+  dimension: is_new_bike {
+    type: yesno
+    sql:  COUNT(${bike_id}) > 1 ;;
+  }
+
+  dimension: concat_test {
+    type: string
+    sql:  CONCAT(${end_month_name}, null, ${end_station_name}) ;;
+  }
+
+  measure: percent_value1 {
+    type:  number
+    sql:  random();;
+    value_format: "0.00%"
+  }
+  measure: percent_value2 {
+    type:  number
+    sql:  random();;
+    value_format: "0.00%"
+  }
+  measure: percent_value3 {
+    type:  number
+    sql:  random();;
+    value_format: "0.00%"
+  }
+
+  dimension_group: date {
+    type: time
+    view_label: "Work date"
+    label: "Work"
+    timeframes: [raw, date, week, month, quarter, year, day_of_week]
+    sql: ${TABLE}.DATE;;
+    }
+
+  measure: most_common_zone_code {
+    type: string
+    sql: (
+      SELECT
+      REPLACE((ARRAYAGG(zip_code) WITHIN GROUP (ORDER BY date DESC NULLS LAST) [0])::STRING,'"') AS most_common_zone
+      FROM (
+      SELECT
+      driver_id
+      , zip_code
+      , SUM(sum_hours_worked) AS hrs
+      FROM aggregate.agg_driver_shift_stats_daily_per_zone_per_driver agg
+      WHERE {% condition start_raw %} agg.date {% endcondition %}
+
+      GROUP BY 1,2
+      ) a
+      WHERE a.driver_id = ${TABLE}.driver_id
+      );;
+  }
+
+  dimension: bike_id2 {
+    group_label: "🎈Testing HTML"
+    type: number
+    value_format_name: id
+    description: "The id of the school in Handshake"
+    html: <a href="https://app.joinhandshake.com/schools/{{ value }}" target="_blank">Handshake School</a>
+      ;;
+    sql: ${TABLE}.bike_id ;;
+  }
+
+  dimension: end_station_id2 {
+    group_label: "🎈Testing HTML"
+    type: number
+    value_format_name: id
+    description: "The id of the school in Handshake"
+    html: <a href="https://app.joinhandshake.com/schools/{{ value }}" target="_blank">Handshake School</a>
+      ;;
+    sql: ${TABLE}.end_station_id ;;
+  }
 
 }

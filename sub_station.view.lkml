@@ -7,6 +7,7 @@ view: sub_station {
     sql: CAST(${TABLE}.id AS INTEGER);;
   }
 
+
   dimension: city {
     type: string
     sql: ${TABLE}.city ;;
