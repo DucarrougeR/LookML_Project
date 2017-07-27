@@ -11,9 +11,6 @@
 
   elements:
     - name: add_a_unique_name_1499162142
-      label: Not Showing Up Anywhere
-      not: ok
-      unknown: parameter
       title: Untitled Visualization
       model: model1
       explore: sub_trip
