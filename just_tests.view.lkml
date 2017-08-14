@@ -275,4 +275,35 @@ view: just_to_test {
     sql: ${TABLE}.end_station_id ;;
   }
 
+  dimension: show_russian {
+    type: string
+    sql: "человек и закон" ;;
+  }
+
+  dimension: testing_xlsx_decimal_download {
+    description: "getting 000.000 UI data to download .xlsx and .csv"
+    type: number
+    sql: round((random()*10000000)::numeric,3) ;;
+  }
+
+
+  dimension: testing_emoji {
+    label: "Testing Emoji 🎈"
+    type:  number
+    sql:
+      CASE WHEN random() < 0.5 THEN "🎈"
+      ELSE "🍾"
+      END;;
+  }
+
+  dimension: random {
+    type:  number
+    sql:  round((random()*10000000)::numeric,3);;
+  }
+
+  measure: testing_list_measure {
+    type:  list
+    list_field: index
+  }
+
 }

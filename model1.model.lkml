@@ -63,12 +63,20 @@ explore: playing_with_parameters{
 
 explore: pdt_rank_test {
   label:  "pdt rank test"
+  group_label: "TEST"
 }
 
 explore: test_dt_tf {
   label: "Z test dt tf"
+  group_label: "TEST"
 }
 
 explore: just_to_test {
   label: "Z just to test"
+  group_label: "TEST"
+}
+
+explore: native_pdt_conversion {
+  label: "Testing Native PDT"
+  group_label: "TEST"
 }
