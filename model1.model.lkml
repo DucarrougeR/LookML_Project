@@ -80,3 +80,8 @@ explore: native_pdt_conversion {
   label: "Testing Native PDT"
   group_label: "TEST"
 }
+
+# explore: test_pdt_api {
+#   label: "Testing run_query in API for PDT"
+#   group_label: "TEST"
+# }

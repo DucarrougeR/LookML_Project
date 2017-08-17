@@ -2,6 +2,7 @@ view: just_to_test {
   sql_table_name: public.sub_trip ;;
 
   dimension: id {
+    description: "is this description showing in https://localhost:19999/api/3.0/lookml_models/model1/explores/overall_picture "
     primary_key: yes
     type: number
     sql: ${TABLE}.id ;;
