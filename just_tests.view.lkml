@@ -307,4 +307,67 @@ view: just_to_test {
     list_field: index
   }
 
+  dimension: testing_sql_param {
+    type:  string
+    sql :  ${TABLE}.end_station_name ;;
+  }
+
+  dimension: testing_link_on_single_viz {
+    type: number
+    sql: ${TABLE}.bike_id ;;
+    link: {
+      label: "google search"
+      url: "https://www.google.com"
+    }
+  }
+
+  dimension: test_html_cell {
+    type: string
+    sql:  ${TABLE}.end_station_name ;;
+    html:
+     {% if row() =1 %}
+        <div style="color: white; background-color: #CD5555; text-align:center"><font size="14%">{{ rendered_value }}</div>
+       {% if value < 98 TOTAL' %}
+      ;;
+  }
+
+
+  filter: created_in_last_days {
+    label: "Filter orders for only so many days"
+    suggestions: [
+            "3 days ago for 1 day",
+            "10 days ago for 7 days" ,
+            "33 days ago for 30 days"
+            ]
+  }
+
+  dimension: created_in_last_N_days {
+    type: string
+    sql:
+      CASE
+      WHEN
+          substring(NULLIF(regexp_replace({% parameter created_in_last_days %}, '\D',' ','g'), '')
+          from position(' ' in NULLIF(regexp_replace({% parameter created_in_last_days %}, '\D',' ','g')::varchar, ''))
+          for char_length(NULLIF(regexp_replace({% parameter created_in_last_days %}, '\D',' ','g'), ''))
+          )::int = 1
+          THEN 'yesterday'
+      ELSE
+          CONCAT('last ', substring(NULLIF(regexp_replace({% parameter created_in_last_days %}, '\D',' ','g'), '')
+          from position(' ' in NULLIF(regexp_replace({% parameter created_in_last_days %}, '\D',' ','g')::varchar, ''))
+          for char_length(NULLIF(regexp_replace({% parameter created_in_last_days %}, '\D',' ','g'), ''))
+          )::int, ' days')
+        END ;;
+  }
+
+  dimension: dynamic_date_range {
+    type:  string
+    sql:  CASE
+    WHEN ${start_date} BETWEEN current_date - 1 and current_date THEN 'yesterday'
+    WHEN ${start_date} BETWEEN current_date - 7 and current_date -1 then 'last 7 days'
+    WHEN ${start_date} BETWEEN current_date - 30 and current_date -7 then 'last 30 days'
+    ELSE 'Older'
+    END
+    ;;
+  }
+
 }
