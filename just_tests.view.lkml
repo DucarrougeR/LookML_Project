@@ -307,10 +307,10 @@ view: just_to_test {
     list_field: index
   }
 
-  dimension: testing_sql_param {
-    type:  string
-    sql :  ${TABLE}.end_station_name ;;
-  }
+#   dimension: testing_sql_param {
+#     type:  string
+#     sql :  ${TABLE}.end_station_name ;;
+#   }
 
   dimension: testing_link_on_single_viz {
     type: number
