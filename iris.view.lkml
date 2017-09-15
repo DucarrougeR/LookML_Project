@@ -63,10 +63,11 @@ filter: feature_to_explore {
     group_label: "Stats"
     sql:
        case
-          when {% parameter feature_to_explore %} ILIKE 'Petal' then corr(${petal_length}, ${petal_width})
-          when {% parameter feature_to_explore %} ILIKE 'Sepal' then corr(${sepal_length}, ${sepal_width})
-          when {% parameter feature_to_explore %} ILIKE 'Width' then corr(${sepal_width}, ${petal_width})
-          when {% parameter feature_to_explore %} ILIKE 'Length' then corr(${petal_length}, ${sepal_length})
+          when {% parameter feature_to_explore %} = 'Petal' then corr(${petal_length}, ${petal_width})::varchar
+          when {% parameter feature_to_explore %} = 'Sepal' then corr(${sepal_length}, ${sepal_width})::varchar
+          when {% parameter feature_to_explore %} = 'Width' then corr(${sepal_width}, ${petal_width})::varchar
+          when {% parameter feature_to_explore %} = 'Length' then corr(${petal_length}, ${sepal_length})::varchar
+          else 'choose: `Petal`, `Sepal`, `Width`, `Length` as filter value'
         end ;;
   }
 
