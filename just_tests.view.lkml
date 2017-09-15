@@ -19,7 +19,7 @@ view: just_to_test {
     sql: ${TABLE}.duration ;;
   }
 
-#
+
   dimension: duration_tier_value_format {
     type: tier
     tiers: [0,1000,2000,3000,4000,5000,6000,7000,8000]
@@ -36,7 +36,7 @@ view: just_to_test {
 #     sql: ${TABLE}.duration ;;
 #   }
 
-  dimension_group: end {
+  dimension_group: end_date {
     type: time
     timeframes: [
       raw,
@@ -57,11 +57,11 @@ view: just_to_test {
     sql: ${TABLE}.end_date ;;
   }
 
-#   dimension_group: end {
-#     type: time
-#     timeframes: [raw]
-#     sql: ${TABLE}.end_date ;;
-#   }
+  dimension_group: end {
+    type: time
+    timeframes: [raw, hour_of_day, month_name]
+    sql: ${TABLE}.end_date ;;
+  }
 
   dimension:time_periods {
     type: string
@@ -370,4 +370,22 @@ view: just_to_test {
     ;;
   }
 
+  dimension: test_link_nosql{
+    link: {
+      label: "Lead Level Analysis"
+      url: "https://google.com"
+    }
+  }
+
+  dimension: name {
+    description: "Not gonna work if not having field with same name in underlying table"
+    link: {
+      label: "Average Order Profit Look"
+      url: "https://learn.looker.com/looks/249?&f[users.state]={{ _filters['users.state'] | url_encode }}"
+    }
+    link: {
+      label: "User Facts Explore Explore"
+      url: "https://learn.looker.com/explore/ecommerce/users?fields=users.id,users.name&f[users.state]={{ _filters['users.state'] | url_encode }}"
+    }
+  }
 }

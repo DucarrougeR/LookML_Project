@@ -51,5 +51,96 @@ view: iris {
     sql:  ${petal_width} ;;
   }
 
+# correlations
+  measure: petal_correlation {
+    type: number
+    group_label: "Stats"
+    sql:  corr(${petal_length}, ${petal_width}) ;;
+  }
+  measure: sepal_correlation {
+    type: number
+    group_label: "Stats"
+    sql:  corr(${sepal_length}, ${sepal_width}) ;;
+  }
+  measure: width_correlation {
+    type: number
+    group_label: "Stats"
+    sql:  corr(${petal_width}, ${sepal_width}) ;;
+  }
+  measure: length_correlation {
+    type: number
+    group_label: "Stats"
+    sql:  corr(${petal_length}, ${sepal_length}) ;;
+  }
+
+  # Define filter to use Parameter in Measures
+  filter: feature_to_explore {
+    type: string
+    suggestions: ["Petal Width", "Petal Length", "Sepal Width", "Sepal Length"]
+  }
+
+  measure: standard_deviation_population {
+    type: string
+    group_label: "Stats"
+    sql:
+       case
+          when {% parameter feature_to_explore %} = 'Petal Width' then stddev_pop(${petal_length})
+          when {% parameter feature_to_explore %} = 'Petal Length' then stddev_pop(${petal_width})
+          when {% parameter feature_to_explore %} = 'Sepal Width' then stddev_pop(${sepal_width})
+          when {% parameter feature_to_explore %} = 'Sepal Length' then stddev_pop(${sepal_length})
+        end ;;
+  }
+
+  measure: variance_population {
+    type: string
+    group_label: "Stats"
+    sql:
+       case
+          when {% parameter feature_to_explore %} = 'Petal Width' then var_pop(${petal_length})
+          when {% parameter feature_to_explore %} = 'Petal Length' then var_pop(${petal_width})
+          when {% parameter feature_to_explore %} = 'Sepal Width' then var_pop(${sepal_width})
+          when {% parameter feature_to_explore %} = 'Sepal Length' then var_pop(${sepal_length})
+        end ;;
+  }
+
+  measure: modal_value {
+    type: string
+    group_label: "Stats"
+    sql:
+       case
+          when {% parameter feature_to_explore %} = 'Petal Width' then mode(${petal_length}) WITHIN GROUP (ORDER BY ${species})
+          when {% parameter feature_to_explore %} = 'Petal Length' then mode(${petal_width}) WITHIN GROUP (ORDER BY ${species})
+          when {% parameter feature_to_explore %} = 'Sepal Width' then mode(${sepal_width}) WITHIN GROUP (ORDER BY ${species})
+          when {% parameter feature_to_explore %} = 'Sepal Length' then mode(${sepal_length}) WITHIN GROUP (ORDER BY ${species})
+        end ;;
+  }
+
+  measure: Intercept_Reg {
+    type: string
+    group_label: "Stats"
+    sql:
+       case
+          when {% parameter feature_to_explore %} ILIKE 'Petal' then regr_intercept(${petal_length}, ${petal_width})
+          when {% parameter feature_to_explore %} ILIKE 'Sepal' then regr_intercept(${sepal_width}, ${sepal_length})
+        end ;;
+  }
+  measure: R_squared {
+    type: string
+    group_label: "Stats"
+    sql:
+       case
+          when {% parameter feature_to_explore %} ILIKE 'Petal' then regr_r2(${petal_length}, ${petal_width})
+          when {% parameter feature_to_explore %} ILIKE 'Sepal' then regr_r2(${sepal_width}, ${sepal_length})
+        end ;;
+  }
+  measure: Slope {
+    type: string
+    group_label: "Stats"
+    sql:
+       case
+          when {% parameter feature_to_explore %} ILIKE 'Petal' then regr_slope(${petal_length}, ${petal_width})
+          when {% parameter feature_to_explore %} ILIKE 'Sepal' then regr_slope(${sepal_width}, ${sepal_length})
+        end ;;
+  }
 
 }
