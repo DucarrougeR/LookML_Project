@@ -51,32 +51,23 @@ view: iris {
     sql:  ${petal_width} ;;
   }
 
-# correlations
-  measure: petal_correlation {
-    type: number
-    group_label: "Stats"
-    sql:  corr(${petal_length}, ${petal_width}) ;;
-  }
-  measure: sepal_correlation {
-    type: number
-    group_label: "Stats"
-    sql:  corr(${sepal_length}, ${sepal_width}) ;;
-  }
-  measure: width_correlation {
-    type: number
-    group_label: "Stats"
-    sql:  corr(${petal_width}, ${sepal_width}) ;;
-  }
-  measure: length_correlation {
-    type: number
-    group_label: "Stats"
-    sql:  corr(${petal_length}, ${sepal_length}) ;;
+
+# Define filter to use Parameter in Measures
+filter: feature_to_explore {
+  type: string
+  suggestions: ["Petal Width", "Petal Length", "Sepal Width", "Sepal Length", "Petal", "Sepal", "Length", "Width"]
   }
 
-  # Define filter to use Parameter in Measures
-  filter: feature_to_explore {
+  measure: correlation {
     type: string
-    suggestions: ["Petal Width", "Petal Length", "Sepal Width", "Sepal Length"]
+    group_label: "Stats"
+    sql:
+       case
+          when {% parameter feature_to_explore %} ILIKE 'Petal' then corr(${petal_length}, ${petal_width})
+          when {% parameter feature_to_explore %} ILIKE 'Sepal' then corr(${sepal_length}, ${sepal_width})
+          when {% parameter feature_to_explore %} ILIKE 'Width' then corr(${sepal_width}, ${petal_width})
+          when {% parameter feature_to_explore %} ILIKE 'Length' then corr(${petal_length}, ${sepal_length})
+        end ;;
   }
 
   measure: standard_deviation_population {
