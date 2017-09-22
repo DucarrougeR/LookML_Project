@@ -388,4 +388,25 @@ view: just_to_test {
       url: "https://learn.looker.com/explore/ecommerce/users?fields=users.id,users.name&f[users.state]={{ _filters['users.state'] | url_encode }}"
     }
   }
+
+  measure: max_value {
+    type:  max
+    group_label: "HTML COLORING"
+    hidden:  yes
+    sql:  ${TABLE}.bike_id ;;
+}
+
+  measure: color_count {
+    required_fields: [max_value]
+    group_label: "HTML COLORING"
+    type: count
+    html:
+    {% if value > max_value._value | times: 0.75 %}
+      <font color="darkgreen">{{ rendered_value }}</font>
+    {% elsif value > max_value._value | times: 0.6 %}
+      <font color="orange">{{ rendered_value }}</font>
+    {% else %}
+      <font color="darkred">{{ rendered_value }}</font>
+    {% endif %} ;;
+  }
 }
