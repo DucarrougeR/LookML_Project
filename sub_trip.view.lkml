@@ -191,7 +191,7 @@ view: sub_trip {
     }
   dimension: avatar_image {
       sql: ${image_link} ;;
-      html: <img src='{{ rendered_value }}' width="75px" />
+      html: <img src='{{ linked_value }}' width="75px" />
         ;;
   }
 
