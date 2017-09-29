@@ -47,6 +47,7 @@ view: sub_trip {
       day_of_month,
       month_name,
       month_num,
+      millisecond,
       date,
       week,
       month,
@@ -180,6 +181,18 @@ view: sub_trip {
   dimension: product_image {
     sql: CASE WHEN 1=1 THEN 'san-francisco' END;;
       html: <img src='https://www.dryfast.net/wp-content/uploads/2015/09/Dryfast-seal-of-city-and-county-of-san-francisco.jpg' width="100" height="100"/>;;
+  }
+
+  dimension: image_link {
+    type:  string
+    sql:
+        CASE WHEN 1=1 THEN  'https://www.dryfast.net/wp-content/uploads/2015/09/Dryfast-seal-of-city-and-county-of-san-francisco.jpg'
+        END ;;
+    }
+  dimension: avatar_image {
+      sql: ${image_link} ;;
+      html: <img src='{{ value }}' width="75px" />
+        ;;
   }
 
   measure: count {

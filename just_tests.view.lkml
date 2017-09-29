@@ -409,4 +409,14 @@ view: just_to_test {
       <font color="darkred">{{ rendered_value }}</font>
     {% endif %} ;;
   }
+
+  # dimension: is_in_period {
+  #   type:  string
+  #   sql:
+  #     CASE
+  #     WHEN DATE_DIFF(${view.date}, NOW()) < 7 THEN "this week"
+  #     WHEN DATE_DIFF(${view.date}, NOW()) > 7 AND DATE_DIFF(${view.date}, NOW()) < 14 THEN "past week"
+  #     ELSE null
+  #     END;;
+  # }
 }
