@@ -7,6 +7,13 @@ include: "*.dashboard.lookml"  # include all dashboards in this project
 # # and define the joins that connect them together.
 #
 
+datagroup: daily_update {
+  sql_trigger: SELECT current_date ;;
+  max_cache_age: "23 hours"
+}
+
+
+
 map_layer: identifier {
   file: "Bay_Area_Project.json"
   property_key: "ZCTA5CE10"
@@ -16,6 +23,7 @@ map_layer: identifier {
 # property_key: "ZCTA5CE10"
 
 explore: overall_picture {
+  persist_with: daily_update
   view_name: sub_trip {
     sql_always_where: LENGTH(${sub_trip.zip_code}) = 5
     AND (${sub_trip.zip_code} LIKE '94%' OR ${sub_trip.zip_code} LIKE '95%');;
