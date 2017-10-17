@@ -135,4 +135,37 @@ filter: feature_to_explore {
         end ;;
   }
 
+
+  measure: count_sepal_GAUGE {
+    group_label: "Google chart API"
+    type: number
+    sql: AVG(${sepal_length})*100 / MAX(${sepal_length}) ;;
+    html: <img src="https://chart.googleapis.com/chart?chs=500x300&cht=gom&chxt=y&chco=d84341,efb30e,f2f210,6fe043&chf=bg,s,FFFFFF00&chd=t:{{ value }}"/> ;;
+  }
+  measure: count_sepal_value {
+    group_label: "Google chart API"
+    type: number
+    sql: AVG(${sepal_length})*100 / MAX(${sepal_length}) ;;
+  }
+
+  measure: test_dble_pie {
+    group_label: "Google chart API"
+    type:  number
+    sql:  ${avg_sepal_width} ;;
+    html: <img src="http://chart.apis.google.com/chart?cht=pc&chs=500x250&chdl=first+legend%7Csecond+legend%7Cthird+legend|legend+four%7Clegend+five%7Clegend+six&chl=first+label%7Csecond+label%7Cthird+label|label+four%7Clabel+five%7Clabel+six&chco=FF0000|00FFFF|00FF00,6699CC|CC33FF|CCCC33&chtt=My+Google+Chart&chts=000000,24&chd=t:5,10,50|25,35,45" /> ;;
+  }
+
+  measure: test_3d_pie {
+    group_label: "Google chart API"
+    type: average
+    sql: ${sepal_length} ;;
+    html: <img src="http://chart.apis.google.com/chart?cht=p3&chs=500x250&chdl=first+legend%7Csecond+legend%7Cthird+legend&chl=first+label%7Csecond+label%7Cthird+label&chco=FF0000|00FFFF|00FF00,6699CC|CC33FF|CCCC33&chtt=My+Google+Chart&chts=000000,24&chd=t:5,10,50|25,35,45" /> ;;
+  }
+
+  measure: test_bar_chart {
+    group_label: "Google chart API"
+    type:  average
+    sql:  ${sepal_length} ;;
+    html: <img src="http://chart.apis.google.com/chart?cht=lc&chf=FFE7C6&chs=500x250&chco=6699CC,CC33FF,CCCC33&chxt=x,y&chxr=0,-20,100|1,0,50&chdl=first+legend%7Csecond+legend%7Cthird+legend&chtt=My+Google+Chart&chts=000000,24&chd=t:5,10,50|25,35,45" />;;
+  }
 }

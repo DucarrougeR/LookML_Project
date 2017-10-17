@@ -142,6 +142,9 @@ view: sub_trip {
   dimension: is_in_sf {
     type: yesno
     sql: ${zip_code} = ANY('{94102, 94103, 94104, 94105, 94107, 94108, 94109, 94110, 94111, 94112, 94114, 94115, 94116, 94117, 94118, 94121, 94122, 94123, 94124, 94127, 94129, 94130, 94131, 94132, 94133, 94134, 94158}') ;;
+    link: {
+      url: "https://localhost:9999/dashboards/2"
+    }
   }
 
   dimension: geo_map {
@@ -198,6 +201,8 @@ view: sub_trip {
   measure: count {
     type: count_distinct
     sql: ${id} ;;
+    drill_fields: [neighborhood]
+
   }
 
   measure:avg_trip_time {
