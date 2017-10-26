@@ -180,6 +180,17 @@ view: just_to_test {
     sql: ${id} ;;
   }
 
+  measure: test_html_value {
+    type: count_distinct
+    sql: ${id} ;;
+
+  html:
+    <summary style="outline:none"> Dau: {{ count._rendered_value }}</summary>
+    Total Dau: {{ avg_trip_time._value }}
+    <summary style="outline:none"> Percentage: {{ count._linked_value }}</summary>
+    <br/>;;
+  }
+
   measure:avg_trip_time {
     description: "trip duration in seconds"
     type: average
@@ -409,6 +420,16 @@ view: just_to_test {
       <font color="darkred">{{ rendered_value }}</font>
     {% endif %} ;;
   }
+
+
+  measure: test {
+    type: median
+    value_format_name: decimal_1
+    sql: DATEDIFF(MINUTE, ${start_raw}, ${end_raw})::FLOAT ;;
+    group_label: "Timeliness"
+    description: "Median Time (in minutes) taken for CS agents to fully resolved the tickets."
+  }
+
 
   # dimension: is_in_period {
   #   type:  string
