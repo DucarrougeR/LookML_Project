@@ -18,6 +18,14 @@ view: iris {
     group_label: "Petal"
     sql: ${TABLE}.petal_length ;;
   }
+  dimension: petal_length_tiered {
+    type:  tier
+    style:  classic
+    tiers: [0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0]
+    group_label: "Petal"
+    sql: ${TABLE}.petal_length ;;
+    hidden:  yes
+  }
 
   dimension: petal_width {
     type:  number
@@ -142,6 +150,7 @@ filter: feature_to_explore {
     sql: AVG(${sepal_length})*100 / MAX(${sepal_length}) ;;
     html: <img src="https://chart.googleapis.com/chart?chs=500x300&cht=gom&chxt=y&chco=d84341,efb30e,f2f210,6fe043&chf=bg,s,FFFFFF00&chd=t:{{ value }}"/> ;;
   }
+
   measure: count_sepal_value {
     group_label: "Google chart API"
     type: number
@@ -159,7 +168,7 @@ filter: feature_to_explore {
     group_label: "Google chart API"
     type: average
     sql: ${sepal_length} ;;
-    html: <img src="http://chart.apis.google.com/chart?cht=p3&chs=500x250&chdl=first+legend%7Csecond+legend%7Cthird+legend&chl=first+label%7Csecond+label%7Cthird+label&chco=FF0000|00FFFF|00FF00,6699CC|CC33FF|CCCC33&chtt=My+Google+Chart&chts=000000,24&chd=t:5,10,50|25,35,45" /> ;;
+    html: <img src="http://chart.apis.google.com/chart?cht=p3&chs=500x250&chdl=first+legend%7Csecond+legend%7Cthird+legend&chl=first+label%7Csecond+label%7Cthird+label&chco=FF0000|00FFFF|00FF00,6699CC|CC33FF|CCCC33&chtt=My+Sweet+Pie&chts=000000,24&chd=t:5,10,50|25,35,45" /> ;;
   }
 
   measure: test_bar_chart {
@@ -427,7 +436,7 @@ filter: feature_to_explore {
   }
 
   dimension: testing_flags_api {
-    sql: ${country_code} ;;
+    sql: CASE WHEN random() < 2 THEN 'fra' ELSE NULL END ;;
     html: <img src="https://restcountries.eu/data/{{ value }}.svg" style="width:50px;height:30px;"/> ;;
   }
 
@@ -437,4 +446,24 @@ filter: feature_to_explore {
     html: <img src="http://freegeoip.net/json/{{ value }}"/> ;;
   }
 
+  measure: pie_chartspree {
+    group_label: "ChartSpree"
+    type:  number
+    sql: AVG(${sepal_length})*100 / MAX(${sepal_length}) ;;
+  html: <img src="//chartspree.io/pie.svg?Some=1&Thing=2"/> ;;
+  }
+
+  measure: bar_chartspree {
+    group_label: "ChartSpree"
+    type:  number
+    sql: AVG(${sepal_length})*100 / MAX(${sepal_length}) ;;
+    html: <img src="//chartspree.io/pie.svg?Some=1&Thing=2"/> ;;
+  }
+
+  measure: line_chartspree {
+    group_label: "ChartSpree"
+    type:  number
+    sql: AVG(${sepal_length})*100 / MAX(${sepal_length}) ;;
+    html: <img src="http://chartspree.io/line.svg?Foo=lorem_hockey&_show_legend=false&_height=300px&_interpolate=cubic&_fill=true"> ;;
+}
 }

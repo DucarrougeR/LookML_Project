@@ -12,7 +12,7 @@ view: test_dt_tf {
 
   dimension: id {
     primary_key: yes
-    type: number
+    type: string
     sql: test_dt_tf.id;;
   }
 

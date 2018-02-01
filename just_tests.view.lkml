@@ -27,6 +27,7 @@ view: just_to_test {
     value_format: "#,##0"
     sql: ${TABLE}.duration ;;
   }
+
 #
 #   dimension: duration_tier_value_name {
 #     type: tier
@@ -428,6 +429,35 @@ view: just_to_test {
     sql: DATEDIFF(MINUTE, ${start_raw}, ${end_raw})::FLOAT ;;
     group_label: "Timeliness"
     description: "Median Time (in minutes) taken for CS agents to fully resolved the tickets."
+  }
+
+  dimension: testing_webhook {
+    description: "Webhook that will send email to looker Gmail"
+    type: number
+    sql: ${TABLE}.bike_id ;;
+    action: {
+      label: "Subscription is good to go"
+      url: "https://hooks.zapier.com/hooks/catch/2705960/szgspt/"
+      param: {
+        name: "yeah"
+        value: "{{ value }}"
+      }
+    }
+  }
+
+  dimension: sample_url {
+    type:  string
+    sql: 'www.google.com' ;;
+  }
+
+  dimension: test_link_sample_url {
+    type: string
+    sql: 'a link' ;;
+    link: {
+      label: "sweet link"
+      # url: "${sample_url}" # NOT WORKING
+      url: "{{sample_url._value}}"
+    }
   }
 
 

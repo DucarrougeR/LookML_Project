@@ -89,6 +89,7 @@ explore: native_pdt_conversion {
   group_label: "TEST"
 }
 
+explore: testing_pdt_with_persist_and_trigger {}
 # explore: test_pdt_api {
 #   label: "Testing run_query in API for PDT"
 #   group_label: "TEST"

@@ -6,6 +6,16 @@ view: playing_with_parameters {
     sql: ${TABLE}.bikes_available ;;
   }
 
+  # parameter: bucket {
+  #   type: number
+  # }
+  # dimension: bucketed_bikes {
+  #   type: tier
+  #   tiers: [0, {% parameter bucket %}, {% parameter bucket %}*2, {% parameter bucket %}*3]
+  #   style: classic
+  #   sql: ${age} ;;
+  # }
+
   dimension: docks_available {
     type: number
     sql: ${TABLE}.docks_available ;;
@@ -60,6 +70,16 @@ view: playing_with_parameters {
     drill_fields: []
   }
 
+#   parameter: number_of_results {
+#     type: string
+#     }
+#
+#   dimension: custom_timeframe {
+#     sql: CASE WHEN DATEDIFF(month, {% parameter number_of_results %}, ${my_date}) <= 2
+#           THEN ${my_date}
+#     ELSE NULL
+#     END;;
+#   }
 
   # TESTING ###########################################################################
   # from https://discourse.looker.com/t/dynamic-date-filter-comparisons/5471

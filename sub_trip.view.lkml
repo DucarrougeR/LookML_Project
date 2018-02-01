@@ -18,6 +18,11 @@ view: sub_trip {
     sql: ${TABLE}.duration ;;
   }
 
+  dimension: image_client {
+    sql:  'https://cdn-adl.sourcelogistic.com/do/4xI4LJfSO9U/small_3d-p1-sv-SE' ;;
+    html: <img src="{{ value }}"/> ;;
+  }
+
 #
   dimension: duration_tier_value_format {
     type: tier
@@ -52,6 +57,7 @@ view: sub_trip {
       week,
       month,
       quarter,
+      week_of_year,
       year
     ]
     sql: ${TABLE}.end_date ;;
@@ -136,6 +142,11 @@ view: sub_trip {
 
   dimension: zip_code {
     type: zipcode
+    sql: ${TABLE}.zip_code;;
+  }
+  dimension: zip_code_string {
+    description: "added this to test the use of zipcode in custom filters 💥, then using type string ✅"
+    type: string
     sql: ${TABLE}.zip_code;;
   }
 
