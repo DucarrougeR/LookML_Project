@@ -9,7 +9,9 @@ view: snowflake_order {
   dimension_group: created_at {
     type: time
     timeframes: [year, month, month_name, week, week_of_year, date, day_of_week, minute]
+  convert_tz: no
   }
+
 
   # NOT WORKING as on Looker 5
   # measure: list_status {

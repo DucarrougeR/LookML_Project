@@ -461,13 +461,35 @@ view: just_to_test {
   }
 
 
-  # dimension: is_in_period {
-  #   type:  string
-  #   sql:
-  #     CASE
-  #     WHEN DATE_DIFF(${view.date}, NOW()) < 7 THEN "this week"
-  #     WHEN DATE_DIFF(${view.date}, NOW()) > 7 AND DATE_DIFF(${view.date}, NOW()) < 14 THEN "past week"
-  #     ELSE null
-  #     END;;
-  # }
+parameter: testing_filter {
+
+}
+
+  parameter: param {
+    label: "test param"
+    type: string
+    allowed_value: {
+      label: "Object 1"
+      value: "CL"
+    }
+    allowed_value: {
+      label: "Object 2"
+      value: "SO"
+    }
+    allowed_value: {
+      label: "Object 3"
+      value: "LH"
+    }
+  }
+
+  dimension: instrument_name {
+    sql: ${TABLE}.instrument_name ;;
+  }
+
+  dimension: new {
+    sql:  CASE WHEN ${instrument_name} LIKE 'CL%%' AND ${instrument_name} NOT LIKE 'CL SO%' THEN 'Core Lab'
+          WHEN ${instrument_name} LIKE 'CL SO%' OR ${instrument_name} LIKE '%send%out%' THEN 'Sent Out'
+          ...
+          else null end ;;
+  }
 }

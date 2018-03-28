@@ -14,7 +14,14 @@ view: sub_status {
   dimension: index {
     type: number
     sql: ${TABLE}.index ;;
+    drill_fields: [sub_station.station_set*]
   }
+  dimension: index_2 {
+    type: number
+    sql: ${TABLE}.index ;;
+    drill_fields: [sub_station.id, sub_station.dock_count]
+  }
+
 
   dimension: station_id {
     primary_key: yes
@@ -40,6 +47,14 @@ view: sub_status {
   measure: count {
     type: count_distinct
     sql: ${index} ;;
-    drill_fields: []
+    drill_fields: [sub_station.id, sub_station.dock_count]
+  }
+  measure: count_2 {
+    type: count_distinct
+    sql: ${index} ;;
+    drill_fields: [sub_station.station_set*]
+}
+  set: station_set {
+    fields: [sub_station.id, sub_station.dock_count]
   }
 }

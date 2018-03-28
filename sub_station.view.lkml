@@ -8,6 +8,19 @@ view: sub_station {
   }
 
 
+dimension: city_localized {
+  label: "{% if _user_attributes['email'] == 'romain.ducarrouge@looker.com' %}
+  Ville
+  {% elsif _user_attributes['email'] == 'romainducarrouge@gmail.com' %}
+  Ciudad
+  {% else %}
+  City
+  {% endif %}"
+  type: string
+  sql: ${TABLE}.city ;;
+}
+
+
   dimension: city {
     type: string
     sql: ${TABLE}.city ;;
@@ -32,6 +45,22 @@ view: sub_station {
     sql: ${TABLE}.installation_date ;;
   }
 
+  dimension: month_no_drill {
+    # type: date
+    sql: ${installation_month} ;;
+    group_label: "Dates No Drill"
+  }
+  dimension: date_no_drill {
+    # type: date
+    sql: ${installation_date} ;;
+    group_label: "Dates No Drill"
+  }
+  dimension: year_no_drill {
+    # type: date
+    sql: ${installation_year} ;;
+    group_label: "Dates No Drill"
+  }
+
   dimension: location {
     type: location
     sql_latitude: ${TABLE}.lat ;;
@@ -47,5 +76,9 @@ view: sub_station {
   measure: station_count {
     type: count
     drill_fields: [id, name]
+  }
+
+  set: station_set {
+    fields: [id, dock_count]
   }
 }

@@ -15,3 +15,17 @@ explore: snowflake_user {
     sql_on: ${snowflake_user.id} = ${snowflake_order.user_id} ;;
   }
 }
+
+explore: snowflake_order {
+  from:  snowflake_order
+
+  join: snowflake_user {
+    relationship: many_to_one
+    sql_on: ${snowflake_user.id} = ${snowflake_order.user_id}
+            AND
+            {{ _user_attributes['first_name'] }} IN ('romain')
+            --{{ _user_attributes['id'] }} IN ('1')
+            ;;
+
+  }
+}
